@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1035947324233",
+    "project_id": "khapshap-8b303",
+    "storage_bucket": "khapshap-8b303.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035947324233:android:765a0e13cebcf7792de098",
+        "android_client_info": {
+          "package_name": "com.khapshap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035947324233-hibbufpcn8r80cm904uh0km12bdsbvl0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1heXTVj0VCoPv3LMkT6EQ3KXvSbyv_Gc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035947324233-hibbufpcn8r80cm904uh0km12bdsbvl0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
