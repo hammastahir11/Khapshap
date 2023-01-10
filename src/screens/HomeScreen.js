@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import firestore from '@react-native-firebase/firestore'
 import { FAB } from 'react-native-paper'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import AccountScreen from './AccountScreen';
+
+const Tab = createBottomTabNavigator();
 export default function HomeScreen({ user, navigation }) {
     const [users, setUsers] = useState(null)
     const getUsers = async () => {
@@ -34,7 +39,12 @@ export default function HomeScreen({ user, navigation }) {
         )
     }
     return (
+        
         <View style={{ flex: 1 }}>
+            {/* <Tab.Navigator>
+                <Tab.Screen name="Home" component={HomeScreen} />
+                <Tab.Screen name="account" component={AccountScreen} />
+            </Tab.Navigator> */}
             <FlatList
                 data={users}
                 renderItem={({ item }) => { return <RenderCard item={item} /> }}

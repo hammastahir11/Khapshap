@@ -6,7 +6,8 @@ import DocumentPicker from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
-//import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { colors } from "../../src/constants";
+
 
 export default function SignupScreen({ navigation }) {
     const [email, setEmail] = useState('')
@@ -19,11 +20,11 @@ export default function SignupScreen({ navigation }) {
         return <ActivityIndicator size="large" color="#00ff00" />
     }
     const userSignup = async () => {
-        setLoading(true)
-        if (!email || !password || !name) {
+        if (!email || !password || !image || !name) {
             alert("please add all the field")
             return
         }
+        setLoading(true)
         try {
             const result = await auth().createUserWithEmailAndPassword(email, password)
             firestore().collection('users').doc(result.user.uid).set({
@@ -35,38 +36,40 @@ export default function SignupScreen({ navigation }) {
             })
             setLoading(false)
         } catch (err) {
-            console.log(err);
+            
+           // console.log(err);
             alert("something went wrong during Signup")
+            setLoading(false)
         }
 
 
     }
     const pickImageAndUpload = () => {
         launchImageLibrary({ quality: 1 }, (result) => {
-            console.log(image);
+            // console.log(image);
 
             const img = result.assets[0];
             const uploadTask = storage()
-              .ref()
-              .child(`/userprofile/${Date.now()}`)
-              .putFile(img.uri);
+                .ref()
+                .child(`/userprofile/${Date.now()}`)
+                .putFile(img.uri);
 
 
-    uploadTask.on('state_changed',
-        (snapshot) => {
+            uploadTask.on('state_changed',
+                (snapshot) => {
 
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            if (progress == 100) alert('image uploaded')
-        },
-        (error) => {
-            alert("error uploading image")
-        },
-        () => {
-            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                setImage(downloadURL)
-            });
-        }
-    );
+                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    if (progress == 100) alert('image uploaded')
+                },
+                (error) => {
+                    alert("error uploading image")
+                },
+                () => {
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        setImage(downloadURL)
+                    });
+                }
+            );
         })
     }
 
@@ -109,18 +112,19 @@ export default function SignupScreen({ navigation }) {
                         >select profile pic</Button>
                         <Button
                             mode="contained"
-                            //disabled={image ? false : true}
+                            disabled={image ? false : true}
                             onPress={() => userSignup()}
                         >Signup</Button>
                     </>
                     :
                     <Button
                         mode="contained"
+                        disabled={ password? false : true}
                         onPress={() => setShowNext(true)}
                     >Next</Button>
                 }
 
-                <TouchableOpacity onPress={() => navigation.goBack()}><Text style={{ textAlign: "center" }}>Already have an account ?</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('login')}><Text style={{ textAlign: "center" }}>Already have an account ?</Text></TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
     )

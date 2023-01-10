@@ -4,6 +4,7 @@ import firestore from '@react-native-firebase/firestore'
 import Feather from 'react-native-vector-icons/Feather'
 import {Button} from 'react-native-paper'
 import auth from '@react-native-firebase/auth'
+import { colors } from "../../src/constants";
 
 export default function AccountScreen({user}) {
      const [profile,setProfile] = useState('')

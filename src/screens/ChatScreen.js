@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import { View, Text } from 'react-native'
 import { GiftedChat,Bubble,InputToolbar} from 'react-native-gifted-chat'
 import firestore from '@react-native-firebase/firestore'
+import { colors } from "../../src/constants";
 export default function ChatScreen({user,route}) {
     const [messages, setMessages] = useState([]);
      const {uid} = route.params;
@@ -66,6 +67,7 @@ export default function ChatScreen({user,route}) {
             sentTo:uid,
             createdAt:new Date()
         }
+        
        setMessages(previousMessages => GiftedChat.append(previousMessages,mymsg))
        const docid  = uid > user.uid ? user.uid+ "-" + uid : uid+"-"+user.uid 
  
