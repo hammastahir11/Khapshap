@@ -42,7 +42,7 @@ export default function HomeScreen({ user, navigation }) {
             />
             <FAB
                 style={styles.fab}
-                icon="face-profile"
+                icon="face-man-profile"
                 color="black"
                 onPress={() => navigation.navigate("account")}
             />

@@ -108,5 +108,3 @@ export default function ChatScreen({user,route}) {
         </View>
     )
 }
-
-//iz7vjsQcrveLDmWog1ndeEOWf3q2-jxdrkDRvqLhq8YfHLyyzQbN9ED93

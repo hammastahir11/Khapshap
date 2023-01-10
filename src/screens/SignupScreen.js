@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { View, Text, Image, StyleSheet, KeyboardAvoidingView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { TextInput, Button } from 'react-native-paper';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import DocumentPicker from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
+//import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 export default function SignupScreen({ navigation }) {
     const [email, setEmail] = useState('')
@@ -33,32 +35,41 @@ export default function SignupScreen({ navigation }) {
             })
             setLoading(false)
         } catch (err) {
-            alert("something went wrong")
+            console.log(err);
+            alert("something went wrong during Signup")
         }
 
 
     }
     const pickImageAndUpload = () => {
-        launchImageLibrary({ quality: 0.5 }, (fileobj) => {
+        launchImageLibrary({ quality: 1 }, (result) => {
+            console.log(image);
 
-            const uploadTask = storage().ref().child(`/userprofile/${Date.now()}`).putFile(fileobj.uri)
-            uploadTask.on('state_changed',
-                (snapshot) => {
+            const img = result.assets[0];
+            const uploadTask = storage()
+              .ref()
+              .child(`/userprofile/${Date.now()}`)
+              .putFile(img.uri);
 
-                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    if (progress == 100) alert('image uploaded')
-                },
-                (error) => {
-                    alert("error uploading image")
-                },
-                () => {
-                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                        setImage(downloadURL)
-                    });
-                }
-            );
+
+    uploadTask.on('state_changed',
+        (snapshot) => {
+
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            if (progress == 100) alert('image uploaded')
+        },
+        (error) => {
+            alert("error uploading image")
+        },
+        () => {
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                setImage(downloadURL)
+            });
+        }
+    );
         })
     }
+
     return (
         <KeyboardAvoidingView behavior="position">
             <View style={styles.box1}>
