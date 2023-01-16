@@ -8,7 +8,7 @@ import {
   Switch,
   Text,
   useColorScheme,
-  View,
+  View,scheme
 } from 'react-native';
 import 'react-native-gesture-handler';
 import SignupScreen from './screens/SignupScreen';
@@ -29,24 +29,21 @@ import Joining from './screens/Joining';
 
 
 
-// const theme = {
-//   ...DefaultTheme,
-//   roundness: 2,
-//   colors: {
-//     ...DefaultTheme.colors,
-//     primary: 'green',
-//   },
-// };
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'green',
+  },
+};
 
 const MyTheme = {
-  dark: false,
+  ...DefaultTheme,
+  roundness: 2,
   colors: {
-    primary: 'rgb(255, 45, 85)',
-    background: 'rgb(242, 242, 242)',
-    card: 'rgb(255, 255, 255)',
-    text: 'rgb(28, 28, 30)',
-    border: 'rgb(199, 199, 204)',
-    notification: 'rgb(255, 69, 58)',
+    ...DefaultTheme.colors,
+    primary: 'green',
   },
 };
 const MyTheme1 = {
@@ -66,9 +63,7 @@ const Stack = createStackNavigator();
 
 
 const Navigation = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
+ 
   const [user, setuser] = useState('')
 
   useEffect(() => {
@@ -106,11 +101,11 @@ const Navigation = () => {
           <>
 
             <Stack.Screen name="home" options={{
-              headerRight: () =>
-                <Switch
-                  onValueChange={toggleSwitch}
-                  value={isEnabled}
-                />,
+              // headerRight: () =>
+              //   <Switch
+              //     onValueChange={toggleSwitch}
+              //     value={isEnabled}
+              //   />,
               //    <MaterialIcons
               //    name="brightness-medium"
               //    size={34}
@@ -168,8 +163,9 @@ const App = () => {
 
   return (
     <>
-    {/* theme={theme} */}
-      <PaperProvider theme={scheme === 'dark' ? MyTheme : MyTheme1} >
+    {/* theme={isEnabled ? MyTheme : MyTheme1}  */}
+    
+      <PaperProvider theme={theme} >
         <StatusBar barStyle="light-content" backgroundColor="green" />
         <View style={styles.container}>
           <Navigation />
